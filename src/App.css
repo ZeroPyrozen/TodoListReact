@@ -1,5 +1,25 @@
 .App {
-  text-align: center;
+  box-sizing: border-box;
+  margin: 0 auto;
+  background-color: linear-gradient(-180deg, #f53d2d, #f63);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.Header {
+  display: inline-flex;
+  border-bottom: solid 1px #999999;
+  color: #e85205;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 10px;
+  width: 100%;
+}
+
+.bodyContainer {
+  width: 700px;
 }
 
 .App-logo {
@@ -21,7 +41,6 @@
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
-  color: white;
 }
 
 .App-link {
@@ -35,4 +54,54 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.todoListForm {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  background: linear-gradient(-180deg, #f53d2d, #f63);
+  margin-bottom: 10px;
+  border-radius: 2px;
+}
+
+.todoListForm input {
+  padding: 10px;
+  font-size: 16px;
+  border: 2px solid #fff;
+  width: 165px;
+  margin: 10px;
+  transition: width 0.6s, heigth 0.6s;
+}
+
+.todoListForm input:focus {
+  width: 200px;
+}
+
+img {
+  width: 200px;
+  height: 200px;
+}
+
+.btnAddNewTodo {
+  color: white;
+  border: 1px solid white;
+  padding: 4px;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: color 5s;
+}
+
+.btnAddNewTodo:hover {
+  color: rgb(255, 255, 255);
+  background: rgb(232, 82, 5, 0.7);
+  border: 1px solid white;
+  padding: 4px;
+  border-radius: 3px;
+}
+
+.btnHidden {
+  display: none;
 }
