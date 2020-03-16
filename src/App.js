@@ -4,40 +4,46 @@ import "./App.css";
 //import Body from './components/Body';
 import TodoList from "./components/TodoList";
 import InputTodoList from "./components/InputTodoList";
+import Axios from "axios";
+import { Provider, connect } from "react-redux";
+import store from "./ReduxStore";
+import { addTask } from "./ReduxAction";
 
 class App extends React.Component {
+  state = {
+    task: []
+  };
+
   constructor(props) {
     super(props);
-    this.state = {
-      task: [
-        {
-          description: " lorem ",
-          status: true
-        },
-        {
-          description:
-            "4Lorem ipsum dolor sit amet consectetur adipisicing elit. Cumque consequuntur, qui optio, nesciunt harum quis similique, voluptatem perferendis voluptatibus ex adipisci provident fuga delectus blanditiis! Esse minima debitis magni nemo.",
-          status: false
-        },
-        {
-          description:
-            "5Lorem ipsum dolor sit amet consectetur adipisicing elit. Cumque consequuntur, qui optio, nesciunt harum quis similique, voluptatem perferendis voluptatibus ex adipisci provident fuga delectus blanditiis! Esse minima debitis magni nemo.",
-          status: true
-        },
-        {
-          description:
-            "6Lorem ipsum dolor sit amet consectetur adipisicing elit. Cumque consequuntur, qui optio, nesciunt harum quis similique, voluptatem perferendis voluptatibus ex adipisci provident fuga delectus blanditiis! Esse minima debitis magni nemo.",
-          status: true
-        }
-      ]
-    };
+    // this.state = {
+    //   task: [
+    //     {
+    //       description: " lorem ",
+    //       status: true
+    //     },
+    //     {
+    //       description:
+    //         "4Lorem ipsum dolor sit amet consectetur adipisicing elit. Cumque consequuntur, qui optio, nesciunt harum quis similique, voluptatem perferendis voluptatibus ex adipisci provident fuga delectus blanditiis! Esse minima debitis magni nemo.",
+    //       status: false
+    //     },
+    //     {
+    //       description:
+    //         "5Lorem ipsum dolor sit amet consectetur adipisicing elit. Cumque consequuntur, qui optio, nesciunt harum quis similique, voluptatem perferendis voluptatibus ex adipisci provident fuga delectus blanditiis! Esse minima debitis magni nemo.",
+    //       status: true
+    //     },
+    //     {
+    //       description:
+    //         "6Lorem ipsum dolor sit amet consectetur adipisicing elit. Cumque consequuntur, qui optio, nesciunt harum quis similique, voluptatem perferendis voluptatibus ex adipisci provident fuga delectus blanditiis! Esse minima debitis magni nemo.",
+    //       status: true
+    //     }
+    //   ]
+    // };
   }
 
   handlePropsChild(string) {
     console.log(string);
   }
-
-  componentDidMount() {}
 
   deleteTask = idx => {
     let updatedTask = [...this.state.task];
@@ -72,31 +78,24 @@ class App extends React.Component {
   };
 
   getData = () => {
-    setTimeout(() => {
-      console.log("Our data is fetched");
-      this.setState({
-        task: [
-          {
-            description:
-              " img elements must have an alt prop, either with meaningful text, or an empty string for decorative images ",
-            status: true
-          },
-          {
-            description: "sdsdfsdfsdff",
-            status: false
-          },
-          {
-            description: "werwersdfsdf",
-            status: true
-          },
-          {
-            description:
-              "Search for the keywords to learn more about each warning.",
-            status: true
-          }
-        ]
-      });
-    }, 1000);
+    Axios.get(`https://jsonplaceholder.typicode.com/todos`).then(res => {
+      console.log(res);
+      if (res.status == 200) {
+        const data = res.data;
+        let datas = [];
+        datas = data.map(tmp => {
+          return {
+            description: tmp.title,
+            status: tmp.completed
+          };
+        });
+        // this.setState({
+        //   task: datas
+        // });
+
+        this.props.addTask(datas);
+      }
+    });
   };
 
   componentDidMount = () => {
@@ -104,6 +103,7 @@ class App extends React.Component {
   };
 
   render() {
+    console.log(this.props.reduxTask, 1);
     return (
       <div className="App">
         <InputTodoList addNewTodo={this.addNewTodo} />
@@ -120,4 +120,18 @@ class App extends React.Component {
   }
 }
 
-export default App;
+const mapStateToProps = state => {
+  return {
+    reduxTask: state.task
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    addTask: function(task) {
+      return dispatch(addTask(task));
+    }
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
