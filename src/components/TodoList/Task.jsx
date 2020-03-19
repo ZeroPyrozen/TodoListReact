@@ -14,7 +14,6 @@ class Task extends React.Component {
       <div className="container">
         <label
           className={assignedClass.join(" ")}
-          //onClick={() => props.onClickDelete(props.index)}
         >
           <input
             type="checkbox"
@@ -39,40 +38,5 @@ class Task extends React.Component {
     );
   }
 }
-// const Task = (props, idx) => {
-//   const task = props.tasks;
-//   const assignedClass = [];
-
-//   assignedClass.push(task.status ? "completed" : "");
-//   assignedClass.push("title-container");
-
-//   return (
-//     <div className="container">
-//       <label
-//         className={assignedClass.join(" ")}
-//         //onClick={() => props.onClickDelete(props.index)}
-//       >
-//         <input
-//           type="checkbox"
-//           className="regular-checkbox"
-//           onChange={() => props.onCheckStatus(props.index)}
-//           checked={task.status}
-//         />
-//         <label
-//           onClick={() => props.onCheckStatus(props.index)}
-//           className="big-checkbox"
-//         ></label>
-
-//         {task.description}
-//       </label>
-//       <label
-//         className="btnDelete"
-//         onClick={() => props.onClickDelete(props.index)}
-//       >
-//         REMOVE
-//       </label>
-//     </div>
-//   );
-// };
 
 export default Task;
